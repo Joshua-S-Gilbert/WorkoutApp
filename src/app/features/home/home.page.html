@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Today</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="'ion-padding">
+  <ion-item>
+    <ion-label>Exercise</ion-label>
+    <ion-select [(ngModel)]="exerciseId">
+      <ion-select-option *ngFor="let ex of exercises()" [value]="ex.id">
+        {{ ex.name }} ({{ ex.group }})
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Reps</ion-label>
+    <ion-input type="number" [(ngModel)]="reps"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Reps</ion-label>
+    <ion-input type="number" [(ngModel)]="weight"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="addSet()"></ion-button>
+
+  <ion-list class="ion-margin-top">
+    <ion-list-header>Logged Sets ({{ today()?.setLogs?.length || 0}})</ion-list-header>
+    <ion-item *ngFor="let s of today()?.setLogs">
+      <ion-label>
+        <div>
+          {{ exercises().find(e => e.id === s.exerciseId)?.name }} - {{ s.reps }} reps @ {{s.weight}}
+        </div>
+        <small>{{ s.timestamp | date:'shortTime' }}</small>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>
